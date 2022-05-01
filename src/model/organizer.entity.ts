@@ -20,7 +20,7 @@ export class Organizer {
   @Column({ type: 'text' })
   phone: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'numeric' })
   balance: string;
 
   @Column({ type: 'text' })
