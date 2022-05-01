@@ -7,7 +7,7 @@ export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Post('/create')
-  create(@Body() createOwnerDto: CreateOwnerDto) {
+  create(@Body() createOwnerDto: CreateOwnerDto): Promise<CreateOwnerDto> {
     return this.ownerService.create(createOwnerDto);
   }
 }
