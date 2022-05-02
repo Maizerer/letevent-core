@@ -1,10 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { RegistrationDto } from './dto/registration.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateOwnerDto } from '../owner/dto/create-owner.dto';
 import { TokensDto } from './dto/tokens.dto';
+import { CreateOrganizerDto } from '../organizer/dto/create-organizer.dto';
 
 @ApiTags('Авторизация')
 @Controller('auth')
@@ -17,8 +17,9 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Регистрация организатора' })
+  @ApiResponse({ type: TokensDto, status: 201 })
   @Post('/registration')
-  registration(@Body() dto: RegistrationDto) {
+  registration(@Body() dto: CreateOrganizerDto) {
     return this.authService.registration(dto);
   }
 

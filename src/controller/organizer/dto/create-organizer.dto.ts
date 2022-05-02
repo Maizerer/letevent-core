@@ -1,15 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Gender } from '../../../enum-types/enum.type';
 
-export class CreateOwnerDto {
+export class CreateOrganizerDto {
   @ApiProperty({ example: 'Иван' })
   readonly name: string;
 
   @ApiProperty({ example: 'Иванов' })
   readonly surname: string;
-
-  @ApiProperty({ example: 'Иванович' })
-  readonly patronymic: string;
 
   @ApiProperty({ enum: Gender })
   readonly gender: Gender;

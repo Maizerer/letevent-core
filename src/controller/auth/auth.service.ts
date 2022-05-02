@@ -11,22 +11,40 @@ import { JwtService } from '@nestjs/jwt';
 import { OwnerEntity } from '../../model/Owners.entity';
 import { CreateOwnerDto } from '../owner/dto/create-owner.dto';
 import { TokensDto } from './dto/tokens.dto';
+import { CreateOrganizerDto } from '../organizer/dto/create-organizer.dto';
+import { OrganizerService } from '../organizer/organizer.service';
+import { OrganizerEntity } from '../../model/Organizers.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly ownerService: OwnerService,
+    private readonly organizerService: OrganizerService,
     private readonly jwtService: JwtService,
   ) {}
   login(dto: LoginDto) {
     return '';
   }
 
-  registration(dto: LoginDto) {
-    return '';
+  async registration(dto: CreateOrganizerDto): Promise<TokensDto> {
+    const candidate = await this.organizerService.getOrganizerByEmail(
+      dto.email,
+    );
+    if (candidate) {
+      throw new HttpException(
+        'Пользователь с таким email уже есть',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const hash = await bcrypt.hash(dto.password, 5);
+    const user = await this.organizerService.createOrganizer({
+      ...dto,
+      password: hash,
+    });
+    return this.generateTokens(user);
   }
 
-  async registrationOwner(dto: CreateOwnerDto) {
+  async registrationOwner(dto: CreateOwnerDto): Promise<TokensDto> {
     const candidate = await this.ownerService.getOwnerByEmail(dto.email);
     if (candidate) {
       throw new HttpException(
@@ -35,11 +53,19 @@ export class AuthService {
       );
     }
     const hash = await bcrypt.hash(dto.password, 5);
-    const owner = await this.ownerService.createOwner({
+    const user = await this.ownerService.createOwner({
       ...dto,
       password: hash,
     });
-    return this.generateTokensOwner(owner);
+    return this.generateTokensOwner(user);
+  }
+
+  async generateTokens(owner: OrganizerEntity): Promise<TokensDto> {
+    const payload = { id: owner.id, email: owner.email, role: 'organizer' };
+    return {
+      access_token: this.jwtService.sign(payload, { expiresIn: '30m' }),
+      refresh_token: this.jwtService.sign(payload, { expiresIn: '30 days' }),
+    };
   }
 
   async generateTokensOwner(owner: OwnerEntity): Promise<TokensDto> {
