@@ -6,19 +6,22 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ReservsEntity } from './Reservs.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { Gender } from '../enum-types/enum.type';
 
 @Index('organizators_pkey', ['id'], { unique: true })
 @Entity('organizators', { schema: 'public' })
-export class OrganizatorsEntity {
+export class OrganizerEntity {
+  @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
+  id: number;
+
   @Column('text', { name: 'name' })
   name: string;
 
   @Column('text', { name: 'surname' })
   surname: string;
 
-  @Column('text', { name: 'gender' })
-  gender: string;
+  @Column('enum', { name: 'gender', enum: Gender, default: Gender.Male })
+  gender: Gender;
 
   @Column('text', { name: 'password' })
   password: string;
@@ -29,22 +32,15 @@ export class OrganizatorsEntity {
   @Column('text', { name: 'phone' })
   phone: string;
 
-  @Column('numeric', { name: 'balance', nullable: true })
-  balance: string | null;
+  @Column('numeric', { name: 'balance', default: 0 })
+  balance: number;
 
   @Column('text', { name: 'photo', nullable: true })
   photo: string | null;
 
-  @Column('text', { name: 'fingerprint', nullable: true, array: true })
-  fingerprint: string[] | null;
-
-  @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id: number;
-
   @Column('date', { name: 'born_date' })
   bornDate: string;
 
-  @ApiProperty()
   @Column('timestamptz', {
     name: 'reg_date',
     default: () => 'CURRENT_TIMESTAMP',

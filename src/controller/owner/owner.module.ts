@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { OwnersEntity } from '../../model/Owners.entity';
+import { OwnerEntity } from '../../model/Owners.entity';
 import { OwnerService } from './owner.service';
 import { OwnerController } from './owner.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([OwnersEntity])],
+  imports: [TypeOrmModule.forFeature([OwnerEntity])],
   providers: [OwnerService],
   controllers: [OwnerController],
   exports: [OwnerService],

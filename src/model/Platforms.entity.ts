@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PlatformFacilitiesEntity } from './PlatformFacilities.entity';
-import { OwnersEntity } from './Owners.entity';
+import { OwnerEntity } from './Owners.entity';
 import { ReservsEntity } from './Reservs.entity';
 
 @Index('platforms_pkey', ['id'], { unique: true })
@@ -62,12 +62,12 @@ export class PlatformsEntity {
   )
   platformFacilities: PlatformFacilitiesEntity[];
 
-  @ManyToOne(() => OwnersEntity, (owners) => owners.platforms, {
+  @ManyToOne(() => OwnerEntity, (owners) => owners.platforms, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'owner_id', referencedColumnName: 'id' }])
-  owner: OwnersEntity;
+  owner: OwnerEntity;
 
   @OneToMany(() => ReservsEntity, (reservs) => reservs.platform)
   reservs: ReservsEntity[];

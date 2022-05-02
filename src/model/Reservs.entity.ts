@@ -6,8 +6,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { OrganizatorsEntity } from './Organizators.entity';
-import { OwnersEntity } from './Owners.entity';
+import { OrganizerEntity } from './Organizators.entity';
+import { OwnerEntity } from './Owners.entity';
 import { PlatformsEntity } from './Platforms.entity';
 
 @Index('reservs_pkey', ['id'], { unique: true })
@@ -43,19 +43,19 @@ export class ReservsEntity {
   @Column('timestamp with time zone', { name: 'reserve_date', nullable: true })
   reserveDate: Date | null;
 
-  @ManyToOne(() => OrganizatorsEntity, (organizators) => organizators.reservs, {
+  @ManyToOne(() => OrganizerEntity, (organizators) => organizators.reservs, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'org_id', referencedColumnName: 'id' }])
-  org: OrganizatorsEntity;
+  org: OrganizerEntity;
 
-  @ManyToOne(() => OwnersEntity, (owners) => owners.reservs, {
+  @ManyToOne(() => OwnerEntity, (owners) => owners.reservs, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'owner_id', referencedColumnName: 'id' }])
-  owner: OwnersEntity;
+  owner: OwnerEntity;
 
   @ManyToOne(() => PlatformsEntity, (platforms) => platforms.reservs, {
     onDelete: 'RESTRICT',

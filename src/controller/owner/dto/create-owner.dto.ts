@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Gender } from '../../../enum-types/enum.type';
 
 export class CreateOwnerDto {
   @ApiProperty()
@@ -11,7 +12,7 @@ export class CreateOwnerDto {
   readonly patronymic: string;
 
   @ApiProperty()
-  readonly gender: string;
+  readonly gender: Gender;
 
   @ApiProperty()
   readonly password: string;
