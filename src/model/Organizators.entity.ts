@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ReservsEntity } from './Reservs.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Index('organizators_pkey', ['id'], { unique: true })
 @Entity('organizators', { schema: 'public' })
@@ -25,8 +26,8 @@ export class OrganizatorsEntity {
   @Column('text', { name: 'email' })
   email: string;
 
-  @Column('text', { name: 'phone', nullable: true })
-  phone: string | null;
+  @Column('text', { name: 'phone' })
+  phone: string;
 
   @Column('numeric', { name: 'balance', nullable: true })
   balance: string | null;
@@ -43,8 +44,12 @@ export class OrganizatorsEntity {
   @Column('date', { name: 'born_date' })
   bornDate: string;
 
-  @Column('timestamp with time zone', { name: 'reg_date', nullable: true })
-  regDate: Date | null;
+  @ApiProperty()
+  @Column('timestamptz', {
+    name: 'reg_date',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  regDate: string;
 
   @OneToMany(() => ReservsEntity, (reservs) => reservs.org)
   reservs: ReservsEntity[];

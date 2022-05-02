@@ -8,6 +8,6 @@ import { OwnerController } from './owner.controller';
   imports: [TypeOrmModule.forFeature([OwnersEntity])],
   providers: [OwnerService],
   controllers: [OwnerController],
-  exports: [],
+  exports: [OwnerService],
 })
 export class OwnerModule {}

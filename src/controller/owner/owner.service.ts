@@ -10,7 +10,11 @@ export class OwnerService {
     @InjectRepository(OwnersEntity)
     private readonly repo: Repository<OwnersEntity>,
   ) {}
-  async create(ownerDto: CreateOwnerDto): Promise<OwnersEntity> {
+  async createOwner(ownerDto: CreateOwnerDto): Promise<OwnersEntity> {
     return await this.repo.save(ownerDto);
+  }
+
+  async getOwnerByEmail(email: string) {
+    return await this.repo.findOne({ email: email });
   }
 }

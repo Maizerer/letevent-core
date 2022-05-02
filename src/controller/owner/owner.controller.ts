@@ -12,6 +12,6 @@ export class OwnerController {
   @ApiOperation({ summary: 'Создание арендодателя' })
   @ApiResponse({ status: 201, type: OwnersEntity })
   create(@Body() createOwnerDto: CreateOwnerDto): Promise<CreateOwnerDto> {
-    return this.ownerService.create(createOwnerDto);
+    return this.ownerService.createOwner(createOwnerDto);
   }
 }
