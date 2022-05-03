@@ -57,7 +57,8 @@ export class AuthService {
     const candidate = await this.organizerService.getOrganizerByEmail(
       dto.email,
     );
-    if (candidate) {
+    const ownerCandidate = await this.ownerService.getOwnerByEmail(dto.email);
+    if (candidate || ownerCandidate) {
       throw new HttpException(
         'Пользователь с таким email уже есть',
         HttpStatus.BAD_REQUEST,
@@ -73,7 +74,10 @@ export class AuthService {
 
   async registrationOwner(dto: CreateOwnerDto): Promise<TokensDto> {
     const candidate = await this.ownerService.getOwnerByEmail(dto.email);
-    if (candidate) {
+    const organizerCandidate = await this.organizerService.getOrganizerByEmail(
+      dto.email,
+    );
+    if (candidate || organizerCandidate) {
       throw new HttpException(
         'Пользователь с таким email уже есть',
         HttpStatus.BAD_REQUEST,
