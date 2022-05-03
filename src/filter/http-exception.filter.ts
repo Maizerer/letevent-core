@@ -1,10 +1,12 @@
 import {
   ArgumentsHost,
+  BadRequestException,
   Catch,
   ExceptionFilter,
   HttpException,
   HttpStatus,
   Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { QueryFailedError } from 'typeorm';
@@ -48,6 +50,19 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         message = (exception as CannotCreateEntityIdMapError).message;
         code = (exception as any).code;
         break;
+      case BadRequestException:
+        status = HttpStatus.BAD_REQUEST;
+        message = (exception as BadRequestException).getResponse();
+        if (message.message) {
+          message = message.message;
+        }
+        code = (exception as any).code;
+        break;
+      case UnauthorizedException:
+        status = HttpStatus.UNAUTHORIZED;
+        message = (exception as UnauthorizedException).message;
+        code = (exception as any).code;
+        break;
       default:
         status = HttpStatus.INTERNAL_SERVER_ERROR;
     }
@@ -60,12 +75,12 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
 export const GlobalResponseError: (
   statusCode: number,
-  message: string,
+  message: string | string[],
   code: string,
   request: Request,
 ) => IResponseError = (
   statusCode: number,
-  message: string,
+  message: string | string[],
   code: string,
   request: Request,
 ): IResponseError => {
@@ -81,7 +96,7 @@ export const GlobalResponseError: (
 
 export interface IResponseError {
   statusCode: number;
-  message: string;
+  message: string | string[];
   code: string;
   timestamp: string;
   path: string;

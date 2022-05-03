@@ -17,4 +17,8 @@ export class OwnerService {
   async getOwnerByEmail(email: string) {
     return await this.repo.findOne({ email: email });
   }
+
+  async getAllOwners() {
+    return await this.repo.find();
+  }
 }

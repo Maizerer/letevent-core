@@ -6,6 +6,7 @@ import { configService } from './config/config.service';
 import { OwnerModule } from './controller/owner/owner.module';
 import { AuthModule } from './controller/auth/auth.module';
 import { OrganizerModule } from './controller/organizer/organizer.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
