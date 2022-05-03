@@ -11,6 +11,10 @@ import { CreateOrganizerDto } from '../organizer/dto/create-organizer.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOperation({
+    summary: 'Авторизация пользователя (организатор и арендодатель)',
+  })
+  @ApiResponse({ type: TokensDto, status: 200 })
   @Post('/login')
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);

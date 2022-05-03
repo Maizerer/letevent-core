@@ -22,8 +22,35 @@ export class AuthService {
     private readonly organizerService: OrganizerService,
     private readonly jwtService: JwtService,
   ) {}
-  login(dto: LoginDto) {
-    return '';
+
+  async login(dto: LoginDto): Promise<TokensDto> {
+    const owner = await this.ownerService.getOwnerByEmail(dto.email);
+    const organizer = await this.organizerService.getOrganizerByEmail(
+      dto.email,
+    );
+    if (owner || organizer) {
+      let orgPassword, ownPassword;
+      if (owner) {
+        ownPassword = bcrypt.compareSync(dto.password, owner.password);
+      } else {
+        orgPassword = bcrypt.compareSync(dto.password, organizer.password);
+      }
+      if (owner && ownPassword) {
+        return await this.generateTokensOwner(owner);
+      } else if (organizer && orgPassword) {
+        return await this.generateTokens(organizer);
+      } else {
+        throw new HttpException(
+          'Неверный пароль или email',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    } else {
+      throw new HttpException(
+        'Такого пользователя не существует',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async registration(dto: CreateOrganizerDto): Promise<TokensDto> {
