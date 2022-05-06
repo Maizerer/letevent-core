@@ -8,14 +8,20 @@ import { AuthModule } from './controller/auth/auth.module';
 import { OrganizerModule } from './controller/organizer/organizer.module';
 import { JwtModule } from '@nestjs/jwt';
 import { FacilityModule } from './controller/facility/facility.module';
+import { FileModule } from './controller/file/file.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    MulterModule.register({
+      dest: './uploads',
+    }),
     OwnerModule,
     AuthModule,
     OrganizerModule,
     FacilityModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
