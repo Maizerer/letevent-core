@@ -21,7 +21,6 @@ import {
 import { FacilityEntity } from '../../model/Facility.entity';
 import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-file.decorator';
 import { ApiImplicitBody } from '@nestjs/swagger/dist/decorators/api-implicit-body.decorator';
-import { DeleteResult } from 'typeorm';
 
 @ApiTags('Удобства')
 @Controller('facility')

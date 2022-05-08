@@ -14,7 +14,6 @@ export class FacilityService {
     file: Express.Multer.File,
     body: CreateFacilityDto,
   ): Promise<FacilityEntity> {
-    console.log(file);
     const folderName = file.destination.replace('.', '');
     const fileName = folderName + '/' + file.filename;
     return await this.repo.save({ ...body, src: fileName });
