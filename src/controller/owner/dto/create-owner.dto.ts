@@ -5,20 +5,24 @@ import {
   IsEmail,
   IsInt,
   IsNotEmpty,
+  IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
 export class CreateOwnerDto {
   @IsNotEmpty()
+  @IsString()
   @ApiProperty({ example: 'Иван' })
   readonly name: string;
 
   @IsNotEmpty()
+  @IsString()
   @ApiProperty({ example: 'Иванов' })
   readonly surname: string;
 
   @IsNotEmpty()
+  @IsString()
   @ApiProperty({ example: 'Иванович' })
   readonly patronymic: string;
 
@@ -27,18 +31,21 @@ export class CreateOwnerDto {
   readonly gender: Gender;
 
   @MinLength(8)
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 'qwerty123' })
   readonly password: string;
 
   @IsNotEmpty()
   @IsEmail()
+  @IsString()
   @ApiProperty({ example: 'example@mail.ru' })
   readonly email: string;
 
   @IsNotEmpty()
   @MinLength(11)
   @MaxLength(11)
+  @IsString()
   @ApiProperty({ example: '79655214738' })
   readonly phone: string;
 
