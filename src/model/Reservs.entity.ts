@@ -6,9 +6,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { OrganizerEntity } from './Organizers.entity';
-import { OwnerEntity } from './Owners.entity';
-import { PlatformsEntity } from './Platforms.entity';
+import { OrganizerEntity } from './Organizer.entity';
+import { OwnerEntity } from './Owner.entity';
+import { PlatformEntity } from './Platform.entity';
 
 @Index('reservs_pkey', ['id'], { unique: true })
 @Index('fki_org_id', ['orgId'], {})
@@ -57,10 +57,10 @@ export class ReservsEntity {
   @JoinColumn([{ name: 'owner_id', referencedColumnName: 'id' }])
   owner: OwnerEntity;
 
-  @ManyToOne(() => PlatformsEntity, (platforms) => platforms.reservs, {
+  @ManyToOne(() => PlatformEntity, (platforms) => platforms.reservs, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'platform_id', referencedColumnName: 'id' }])
-  platform: PlatformsEntity;
+  platform: PlatformEntity;
 }

@@ -6,14 +6,14 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { FacilitiesEntity } from './Facilities.entity';
-import { PlatformsEntity } from './Platforms.entity';
+import { FacilityEntity } from './Facility.entity';
+import { PlatformEntity } from './Platform.entity';
 
 @Index('fki_1', ['facilityId'], {})
 @Index('platform_facilities_pkey', ['id'], { unique: true })
 @Index('fki_d', ['platformId'], {})
 @Entity('platform_facilities', { schema: 'public' })
-export class PlatformFacilitiesEntity {
+export class PlatformFacilityEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
 
@@ -27,7 +27,7 @@ export class PlatformFacilitiesEntity {
   price: string | null;
 
   @ManyToOne(
-    () => FacilitiesEntity,
+    () => FacilityEntity,
     (facilities) => facilities.platformFacilities,
     {
       onDelete: 'RESTRICT',
@@ -35,10 +35,10 @@ export class PlatformFacilitiesEntity {
     },
   )
   @JoinColumn([{ name: 'facility_id', referencedColumnName: 'id' }])
-  facility: FacilitiesEntity;
+  facility: FacilityEntity;
 
   @ManyToOne(
-    () => PlatformsEntity,
+    () => PlatformEntity,
     (platforms) => platforms.platformFacilities,
     {
       onDelete: 'CASCADE',
@@ -46,5 +46,5 @@ export class PlatformFacilitiesEntity {
     },
   )
   @JoinColumn([{ name: 'platform_id', referencedColumnName: 'id' }])
-  platform: PlatformsEntity;
+  platform: PlatformEntity;
 }

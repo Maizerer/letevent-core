@@ -7,13 +7,13 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PlatformFacilitiesEntity } from './PlatformFacilities.entity';
-import { OwnerEntity } from './Owners.entity';
+import { PlatformFacilityEntity } from './PlatformFacilities.entity';
+import { OwnerEntity } from './Owner.entity';
 import { ReservsEntity } from './Reservs.entity';
 
 @Index('platforms_pkey', ['id'], { unique: true })
 @Entity('platforms', { schema: 'public' })
-export class PlatformsEntity {
+export class PlatformEntity {
   @Column('text', { name: 'name' })
   name: string;
 
@@ -57,10 +57,10 @@ export class PlatformsEntity {
   id: number;
 
   @OneToMany(
-    () => PlatformFacilitiesEntity,
+    () => PlatformFacilityEntity,
     (platformFacilities) => platformFacilities.platform,
   )
-  platformFacilities: PlatformFacilitiesEntity[];
+  platformFacilities: PlatformFacilityEntity[];
 
   @ManyToOne(() => OwnerEntity, (owners) => owners.platforms, {
     onDelete: 'RESTRICT',

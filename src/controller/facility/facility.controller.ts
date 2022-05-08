@@ -18,7 +18,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { FacilitiesEntity } from '../../model/Facilities.entity';
+import { FacilityEntity } from '../../model/Facility.entity';
 import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-file.decorator';
 import { ApiImplicitBody } from '@nestjs/swagger/dist/decorators/api-implicit-body.decorator';
 import { DeleteResult } from 'typeorm';
@@ -29,7 +29,7 @@ export class FacilityController {
   constructor(private readonly facilityService: FacilityService) {}
 
   @ApiOperation({ summary: 'Создание удобства' })
-  @ApiResponse({ type: FacilitiesEntity, status: 201 })
+  @ApiResponse({ type: FacilityEntity, status: 201 })
   @ApiConsumes('multipart/form-data')
   @ApiImplicitFile({
     name: 'file',
@@ -56,14 +56,14 @@ export class FacilityController {
   async createFacility(
     @UploadedFile() file: Express.Multer.File,
     @Body() body: CreateFacilityDto,
-  ): Promise<FacilitiesEntity> {
+  ): Promise<FacilityEntity> {
     return await this.facilityService.createFacility(file, body);
   }
 
   @ApiOperation({ summary: 'Удаление удобства по Id' })
-  @ApiResponse({ type: FacilitiesEntity, status: 200 })
+  @ApiResponse({ type: FacilityEntity, status: 200 })
   @Delete('/:id')
-  async deleteFacility(@Param('id') facilityId): Promise<FacilitiesEntity> {
+  async deleteFacility(@Param('id') facilityId): Promise<FacilityEntity> {
     return await this.facilityService.deleteFacility(facilityId);
   }
 }

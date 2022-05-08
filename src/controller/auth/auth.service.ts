@@ -8,12 +8,12 @@ import * as bcrypt from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
 import { OwnerService } from '../owner/owner.service';
 import { JwtService } from '@nestjs/jwt';
-import { OwnerEntity } from '../../model/Owners.entity';
+import { OwnerEntity } from '../../model/Owner.entity';
 import { CreateOwnerDto } from '../owner/dto/create-owner.dto';
 import { TokensDto } from './dto/tokens.dto';
 import { CreateOrganizerDto } from '../organizer/dto/create-organizer.dto';
 import { OrganizerService } from '../organizer/organizer.service';
-import { OrganizerEntity } from '../../model/Organizers.entity';
+import { OrganizerEntity } from '../../model/Organizer.entity';
 
 @Injectable()
 export class AuthService {

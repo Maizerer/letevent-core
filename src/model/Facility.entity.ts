@@ -5,12 +5,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PlatformFacilitiesEntity } from './PlatformFacilities.entity';
+import { PlatformFacilityEntity } from './PlatformFacilities.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Index('facilities_pkey', ['id'], { unique: true })
 @Entity('facilities', { schema: 'public' })
-export class FacilitiesEntity {
+export class FacilityEntity {
   @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
@@ -24,8 +24,8 @@ export class FacilitiesEntity {
   name: string;
 
   @OneToMany(
-    () => PlatformFacilitiesEntity,
+    () => PlatformFacilityEntity,
     (platformFacilities) => platformFacilities.facility,
   )
-  platformFacilities: PlatformFacilitiesEntity[];
+  platformFacilities: PlatformFacilityEntity[];
 }

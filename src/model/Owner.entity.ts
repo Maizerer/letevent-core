@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PlatformsEntity } from './Platforms.entity';
+import { PlatformEntity } from './Platform.entity';
 import { ReservsEntity } from './Reservs.entity';
 import { Gender } from '../enum-types/enum.type';
 
@@ -60,8 +60,8 @@ export class OwnerEntity {
   @Column('date', { name: 'born_date' })
   bornDate: string;
 
-  @OneToMany(() => PlatformsEntity, (platforms) => platforms.owner)
-  platforms: PlatformsEntity[];
+  @OneToMany(() => PlatformEntity, (platforms) => platforms.owner)
+  platforms: PlatformEntity[];
 
   @OneToMany(() => ReservsEntity, (reservs) => reservs.owner)
   reservs: ReservsEntity[];

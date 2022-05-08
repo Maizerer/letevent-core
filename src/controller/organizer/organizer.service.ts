@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { OrganizerEntity } from '../../model/Organizers.entity';
+import { OrganizerEntity } from '../../model/Organizer.entity';
 import { CreateOrganizerDto } from './dto/create-organizer.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 
