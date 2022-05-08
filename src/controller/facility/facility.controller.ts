@@ -62,7 +62,7 @@ export class FacilityController {
 
   @ApiOperation({ summary: 'Удаление удобства по Id' })
   @ApiResponse({ type: FacilitiesEntity, status: 200 })
-  @Delete('/delete/:id')
+  @Delete('/:id')
   async deleteFacility(@Param('id') facilityId): Promise<FacilitiesEntity> {
     return await this.facilityService.deleteFacility(facilityId);
   }
