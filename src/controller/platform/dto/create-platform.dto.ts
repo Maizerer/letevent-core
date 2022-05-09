@@ -6,6 +6,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { OwnerEntity } from '../../../model/Owner.entity';
 
 export class CreatePlatformDto {
   @IsNotEmpty()
@@ -45,6 +46,8 @@ export class CreatePlatformDto {
   readonly area: number;
 
   readonly mainImg: string;
+
+  readonly owner: OwnerEntity;
 
   @IsNotEmpty()
   @ApiProperty({ example: 100 })

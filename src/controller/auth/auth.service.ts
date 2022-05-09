@@ -14,6 +14,7 @@ import { TokensDto } from './dto/tokens.dto';
 import { CreateOrganizerDto } from '../organizer/dto/create-organizer.dto';
 import { OrganizerService } from '../organizer/organizer.service';
 import { OrganizerEntity } from '../../model/Organizer.entity';
+import { Role } from '../../enum-types/enum.type';
 
 @Injectable()
 export class AuthService {
@@ -91,8 +92,12 @@ export class AuthService {
     return this.generateTokensOwner(user);
   }
 
-  async generateTokens(owner: OrganizerEntity): Promise<TokensDto> {
-    const payload = { id: owner.id, email: owner.email, role: 'organizer' };
+  async generateTokens(organizer: OrganizerEntity): Promise<TokensDto> {
+    const payload = {
+      id: organizer.id,
+      email: organizer.email,
+      role: Role.Organizer,
+    };
     return {
       access_token: this.jwtService.sign(payload, { expiresIn: '30m' }),
       refresh_token: this.jwtService.sign(payload, { expiresIn: '30 days' }),
@@ -100,7 +105,7 @@ export class AuthService {
   }
 
   async generateTokensOwner(owner: OwnerEntity): Promise<TokensDto> {
-    const payload = { id: owner.id, email: owner.email, role: 'owner' };
+    const payload = { id: owner.id, email: owner.email, role: Role.Owner };
     return {
       access_token: this.jwtService.sign(payload, { expiresIn: '30m' }),
       refresh_token: this.jwtService.sign(payload, { expiresIn: '30 days' }),

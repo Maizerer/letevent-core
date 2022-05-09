@@ -8,6 +8,7 @@ import {
 import { PlatformEntity } from './Platform.entity';
 import { ReservsEntity } from './Reservs.entity';
 import { Gender } from '../enum-types/enum.type';
+import { Exclude } from 'class-transformer';
 
 @Index('owners_pkey', ['id'], { unique: true })
 @Entity('owners', { schema: 'public' })
@@ -27,6 +28,7 @@ export class OwnerEntity {
   @Column('enum', { name: 'gender', enum: Gender, default: Gender.Male })
   gender: Gender;
 
+  @Exclude()
   @Column('text', { name: 'password' })
   password: string;
 

@@ -1,8 +1,11 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Post,
+  Req,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { PlatformService } from './platform.service';
@@ -18,6 +21,9 @@ import { PlatformEntity } from '../../model/Platform.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from '../../utils/file-upload';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Roles } from '../../utils/role.decorator';
+import { Role } from '../../enum-types/enum.type';
 
 @ApiTags('Площадка')
 @Controller('platform')
@@ -39,12 +45,16 @@ export class PlatformController {
       }),
       fileFilter: imageFileFilter,
     }),
+    ClassSerializerInterceptor,
   )
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Owner)
   @Post('/create')
   async createPlatform(
+    @Req() request,
     @UploadedFile() file: Express.Multer.File,
     @Body() dto: CreatePlatformDto,
   ): Promise<PlatformEntity> {
-    return await this.platformService.createPlatform(file, dto);
+    return await this.platformService.createPlatform(file, dto, request.user);
   }
 }

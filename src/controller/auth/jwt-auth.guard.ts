@@ -1,15 +1,25 @@
 import {
   CanActivate,
   ExecutionContext,
+  HttpException,
+  HttpStatus,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
+import { Reflector } from '@nestjs/core';
+
+function handleError(e) {
+  throw e;
+}
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private reflector: Reflector,
+  ) {}
 
   canActivate(
     context: ExecutionContext,
@@ -21,16 +31,29 @@ export class JwtAuthGuard implements CanActivate {
       const token = authHeader.split(' ')[1];
 
       if (bearer !== 'Bearer' || !token) {
-        throw new UnauthorizedException({
-          message: 'Пользователь не авторизован',
-        });
+        handleError(
+          new UnauthorizedException({
+            message: 'Пользователь не авторизован',
+          }),
+        );
       }
+
       request.user = this.jwtService.verify(token);
-      return true;
     } catch (e) {
-      throw new UnauthorizedException({
-        message: 'Пользователь не авторизован',
-      });
+      handleError(
+        new UnauthorizedException({
+          message: 'Пользователь не авторизован',
+        }),
+      );
     }
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    if (!roles) {
+      return true;
+    }
+    console.log(roles.includes(request.user.role));
+    if (!roles.includes(request.user.role)) {
+      handleError(new HttpException('Нет доступа', HttpStatus.FORBIDDEN));
+    }
+    return true;
   }
 }
