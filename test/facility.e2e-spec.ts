@@ -21,16 +21,6 @@ describe('FacilityController (e2e)', () => {
       name: 'hello2222',
     },
   ];
-  const mockFile = {
-    fieldname: 'file',
-    originalname: 'slide-hero3.png',
-    encoding: '7bit',
-    mimetype: 'image/png',
-    destination: './uploads',
-    filename: 'slide-hero39826.png',
-    path: 'uploads\\slide-hero39826.png',
-    size: 856143,
-  };
   const mockFacilityRepository = {
     find: jest.fn().mockResolvedValue(mockFacilities),
     save: jest.fn().mockImplementation((facility) => {
