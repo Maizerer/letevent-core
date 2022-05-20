@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   UploadedFile,
@@ -64,5 +65,12 @@ export class FacilityController {
   @Delete('/:id')
   async deleteFacility(@Param('id') facilityId): Promise<FacilityEntity> {
     return await this.facilityService.deleteFacility(facilityId);
+  }
+
+  @ApiOperation({ summary: 'Получение всех удобств' })
+  @ApiResponse({ type: FacilityEntity, status: 200, isArray: true })
+  @Get('/get-all')
+  async getAll(): Promise<FacilityEntity[]> {
+    return await this.facilityService.getAll();
   }
 }

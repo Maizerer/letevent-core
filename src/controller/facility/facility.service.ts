@@ -33,4 +33,8 @@ export class FacilityService {
     }
     return deletedFacility;
   }
+
+  async getAll() {
+    return await this.repo.find();
+  }
 }
