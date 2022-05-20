@@ -50,7 +50,6 @@ export class JwtAuthGuard implements CanActivate {
     if (!roles) {
       return true;
     }
-    console.log(roles.includes(request.user.role));
     if (!roles.includes(request.user.role)) {
       handleError(new HttpException('Нет доступа', HttpStatus.FORBIDDEN));
     }

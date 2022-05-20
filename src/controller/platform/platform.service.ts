@@ -20,7 +20,6 @@ export class PlatformService {
     const folderName = file.destination.replace('.', '');
     const fileName = folderName + '/' + file.filename;
     const owner = await this.ownerService.getOwnerByEmail(user.email);
-    console.log(owner);
     return await this.repo.save({ ...dto, mainImg: fileName, owner: owner });
   }
 }
