@@ -2,6 +2,9 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
+  Get,
+  Param,
   Post,
   Req,
   UploadedFile,
@@ -24,6 +27,7 @@ import { editFileName, imageFileFilter } from '../../utils/file-upload';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Roles } from '../../utils/role.decorator';
 import { Role } from '../../enum-types/enum.type';
+import { Request } from 'express';
 
 @ApiTags('Площадка')
 @Controller('platform')
@@ -56,5 +60,58 @@ export class PlatformController {
     @Body() dto: CreatePlatformDto,
   ): Promise<PlatformEntity> {
     return await this.platformService.createPlatform(file, dto, request.user);
+  }
+  @ApiOperation({ summary: 'Получить площадку' })
+  @ApiResponse({ type: PlatformEntity, status: 200 })
+  @Get('/:id')
+  async getPlatformById(@Param('id') platformId): Promise<PlatformEntity> {
+    return await this.platformService.getPlatformById(platformId);
+  }
+
+  @ApiOperation({ summary: 'Удаление площадки (в корзину)' })
+  @ApiResponse({ type: PlatformEntity, status: 200 })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Owner)
+  @Post('/delete/:id')
+  async deletePlatform(
+    @Param('id') platformId,
+    @Req() request,
+  ): Promise<PlatformEntity> {
+    return await this.platformService.changeDeleteStatus(
+      platformId,
+      request.user,
+      true,
+    );
+  }
+
+  @ApiOperation({ summary: 'Восстановление площадки' })
+  @ApiResponse({ type: PlatformEntity, status: 200 })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Owner)
+  @Post('/restore/:id')
+  async restorePlatform(
+    @Param('id') platformId,
+    @Req() request,
+  ): Promise<PlatformEntity> {
+    return await this.platformService.changeDeleteStatus(
+      platformId,
+      request.user,
+      false,
+    );
+  }
+
+  @ApiOperation({ summary: 'Удаление площадки полностью' })
+  @ApiResponse({ type: PlatformEntity, status: 200 })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Owner)
+  @Delete('/:id')
+  async totalDeletePlatform(
+    @Param('id') platformId,
+    @Req() request,
+  ): Promise<PlatformEntity> {
+    return await this.platformService.totalDeletePlatform(
+      platformId,
+      request.user,
+    );
   }
 }

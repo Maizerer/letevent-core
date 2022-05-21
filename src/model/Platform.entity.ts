@@ -82,6 +82,12 @@ export class PlatformEntity {
   @Column('numeric', { name: 'price' })
   price: number;
 
+  @ApiProperty({
+    example: 'f',
+  })
+  @Column('boolean', { name: 'is_deleted', default: 'f' })
+  isDeleted: boolean;
+
   @OneToMany(
     () => PlatformFacilityEntity,
     (platformFacilities) => platformFacilities.platform,
@@ -93,7 +99,7 @@ export class PlatformEntity {
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'owner_id', referencedColumnName: 'id' }])
-  owner: OwnerEntity;
+  owner: OwnerEntity | number;
 
   @OneToMany(() => ReservsEntity, (reservs) => reservs.platform)
   reservs: ReservsEntity[];

@@ -24,14 +24,7 @@ export class FacilityService {
     if (!facility) {
       throw new HttpException('Удобство не найдено', HttpStatus.NOT_FOUND);
     }
-    const deletedFacility = await this.repo.remove(facility);
-    if (!deletedFacility) {
-      throw new HttpException(
-        'Не удалось удалить удобство',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-    return deletedFacility;
+    return await this.repo.remove(facility);
   }
 
   async getAll() {

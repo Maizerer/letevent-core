@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
 
-function handleError(e) {
+export function handleError(e) {
   throw e;
 }
 
