@@ -6,7 +6,6 @@ import { PlatformEntity } from '../../model/Platform.entity';
 import { TokenUserDto } from './dto/token-user.dto';
 import { OwnerService } from '../owner/owner.service';
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
-import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { handleError } from '../auth/jwt-auth.guard';
 

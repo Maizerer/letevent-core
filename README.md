@@ -22,9 +22,9 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# LetEvent
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Сайт агрегатор для арендодателей и организаторов и поиск площадок для мероприятий
 
 ## Installation
 
@@ -43,6 +43,16 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+
+## Migration
+
+```bash
+# generate migration
+$ npm run typeorm:migration:generate <migration-name>
+
+# run migration
+$ npm run typeorm:migration:run
 ```
 
 ## Test
@@ -64,9 +74,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Rustem Galimov](https://kamilmysliwiec.com)
 
 ## License
 
