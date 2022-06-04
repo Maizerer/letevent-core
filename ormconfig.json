@@ -1,16 +1,16 @@
 {
   "type": "postgres",
-  "host": "127.0.0.1",
+  "host": "db",
   "port": 5432,
   "username": "postgres",
   "password": "root",
   "database": "letevent_core",
   "entities": [
-    "**/*.entity{.ts,.js}"
+    "dist/**/*.entity{.ts,.js}"
   ],
   "migrationsTableName": "migration",
   "migrations": [
-    "src/migration/*.ts"
+    "dist/migration/*.ts"
   ],
   "cli": {
     "migrationsDir": "src/migration"

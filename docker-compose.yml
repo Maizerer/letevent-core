@@ -12,7 +12,7 @@ services:
       - "5050:5050"
     environment:
       - PORT
-      - MODE=DEV
+      - MODE=PROD
       - RUN_MIGRATIONS=true
       - JWT_SECRET
       - POSTGRES_HOST=db
