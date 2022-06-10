@@ -22,6 +22,7 @@ import {
 import { FacilityEntity } from '../../model/Facility.entity';
 import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-file.decorator';
 import { ApiImplicitBody } from '@nestjs/swagger/dist/decorators/api-implicit-body.decorator';
+import { ResponseMessage } from '../../enum-types/enum.type';
 
 @ApiTags('Удобства')
 @Controller('facility')
@@ -63,7 +64,7 @@ export class FacilityController {
   @ApiOperation({ summary: 'Удаление удобства по Id' })
   @ApiResponse({ type: FacilityEntity, status: 200 })
   @Delete('/:id')
-  async deleteFacility(@Param('id') facilityId): Promise<FacilityEntity> {
+  async deleteFacility(@Param('id') facilityId): Promise<ResponseMessage> {
     return await this.facilityService.deleteFacility(facilityId);
   }
 

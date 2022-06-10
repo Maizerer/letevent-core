@@ -3,6 +3,7 @@ import { CreateFacilityDto } from './dto/create-facility.dto';
 import { Repository } from 'typeorm';
 import { FacilityEntity } from '../../model/Facility.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ResponseMessage } from '../../enum-types/enum.type';
 
 @Injectable()
 export class FacilityService {
@@ -19,12 +20,13 @@ export class FacilityService {
     return await this.repo.save({ ...body, src: fileName });
   }
 
-  async deleteFacility(facilityId: number): Promise<FacilityEntity> {
+  async deleteFacility(facilityId: number): Promise<ResponseMessage> {
     const facility = await this.repo.findOneOrFail(facilityId);
     if (!facility) {
       throw new HttpException('Удобство не найдено', HttpStatus.NOT_FOUND);
     }
-    return await this.repo.remove(facility);
+    await this.repo.remove(facility);
+    return { message: 'Удобство успешно удалено' };
   }
 
   async getAll() {

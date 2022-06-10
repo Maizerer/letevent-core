@@ -23,6 +23,8 @@ describe('FacilityController (e2e)', () => {
   ];
   const mockFacilityRepository = {
     find: jest.fn().mockResolvedValue(mockFacilities),
+    findOneOrFail: jest.fn().mockResolvedValue(mockFacilities),
+    remove: jest.fn().mockResolvedValue(mockFacilities),
     save: jest.fn().mockImplementation((facility) => {
       return { id: Date.now(), ...facility };
     }),
@@ -62,5 +64,12 @@ describe('FacilityController (e2e)', () => {
           src: expect.any(String),
         });
       });
+  });
+
+  it('/api/facility/{id} (DELETE)', () => {
+    return request(app.getHttpServer())
+      .delete('/facility/5')
+      .expect(200, { message: 'Удобство успешно удалено' })
+      .expect('Content-Type', /json/);
   });
 });
