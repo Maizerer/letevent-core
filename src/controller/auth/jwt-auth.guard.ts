@@ -37,12 +37,12 @@ export class JwtAuthGuard implements CanActivate {
           }),
         );
       }
-
       request.user = this.jwtService.verify(token);
     } catch (e) {
       handleError(
         new UnauthorizedException({
           message: 'Пользователь не авторизован',
+          error: e,
         }),
       );
     }
